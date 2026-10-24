@@ -4,8 +4,8 @@ const Navbar = () => {
     return(
         <nav style ={{ display: 'flex', gap: '1rem', padding: '1rem'}}>
             <NavLink to="/">Home</NavLink>
-            <NavLink to="dashboard">Dashboard</NavLink>
-            <NavLink to="about">About</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/about">About</NavLink>
         </nav>
     )
 }
