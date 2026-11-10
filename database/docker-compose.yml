@@ -1,0 +1,23 @@
+name: pokevault
+
+# Empty local PostgreSQL. No SQL is mounted, so no application tables are created.
+# Schema is deferred until this repository defines one.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: pokevault
+      POSTGRES_DB: pokevault
+      POSTGRES_PASSWORD: ${POKEVAULT_DB_PASSWORD:?Set POKEVAULT_DB_PASSWORD}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pokevault-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pokevault -d pokevault"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  pokevault-pg-data:
