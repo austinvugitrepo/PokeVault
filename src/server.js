@@ -49,8 +49,32 @@ const pokemonLvl_router = require('./components/PokemonLvl')
 //Calls the router
 app.use('/api/PokemonLvl', pokemonLvl_router)
 
+
+//PokemonType router
+const pokemonType_router = require('./components/PokemonType')
+//Calls the router
+app.use('/api/PokemonType', pokemonType_router)
+
+
+//TeamConfiguration router
+const teamConfiguration_router = require('./components/TeamConfiguration')
+//Calls the router
+app.use('/api/TeamConfiguration', teamConfiguration_router)
+
+
+//TeamMember router
+const teamMember_router = require('./components/TeamMember')
+//Calls the router
+app.use('/api/TeamMember', teamMember_router)
+
+
+//Uses Router
+const user_router = require('./components/User')
+//Calls the router
+app.use('/api/User', user_router)
+
 //Start Server
 app.listen(5000, () => {
-    console.log("Server Successfully Started on Port 3000")
+    console.log("Server Successfully Started on Port 5000")
 })
 
