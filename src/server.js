@@ -31,6 +31,24 @@ const pokemon_ability_router = require('./components/Pokemon_Ability')
 //Calls the router for use
 app.use('/api/Pokemon_Ability', pokemon_ability_router)
 
+
+//Pokemon Type Map Router\
+const pokemon_type_map_router = require('./components/Pokemon_Type_Map')
+//Calls the router
+app.use('/api/Pokemon_Type_Map', pokemon_type_map_router)
+
+
+//PokemonID Router
+const pokemonID_router = require('./components/PokemonID')
+//Calls the router
+app.use('/api/PokemonID', pokemonID_router)
+
+
+//PokemonLvl router
+const pokemonLvl_router = require('./components/PokemonLvl')
+//Calls the router
+app.use('/api/PokemonLvl', pokemonLvl_router)
+
 //Start Server
 app.listen(5000, () => {
     console.log("Server Successfully Started on Port 3000")
