@@ -6,6 +6,20 @@ const { scryptSync, timingSafeEqual } = require("node:crypto");
 const healthRoutes = require("./health");
 const requireAuth = require("../middleware/requireAuth");
 
+// Database table routers (moved from the old src/server.js).
+const dataRouters = {
+  Generation: require("./data/Generation"),
+  Pokemon_Ability_Map: require("./data/Pokemon_Ability_Map"),
+  Pokemon_Ability: require("./data/Pokemon_Ability"),
+  Pokemon_Type_Map: require("./data/Pokemon_Type_Map"),
+  PokemonID: require("./data/PokemonID"),
+  PokemonLvl: require("./data/PokemonLvl"),
+  PokemonType: require("./data/PokemonType"),
+  TeamConfiguration: require("./data/TeamConfiguration"),
+  TeamMember: require("./data/TeamMember"),
+  User: require("./data/User"),
+};
+
 const {
   SESSION_SECRET,
   DEMO_USERNAME,
@@ -136,6 +150,11 @@ app.post("/api/auth/logout", requireAuth, (req, res, next) => {
     res.json({ message: "Signed out." });
   });
 });
+
+// Same URLs the old src/server.js used, e.g. /api/Generation.
+for (const [name, router] of Object.entries(dataRouters)) {
+  app.use(`/api/${name}`, router);
+}
 
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });

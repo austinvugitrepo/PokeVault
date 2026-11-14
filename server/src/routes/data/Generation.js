@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //Import postgreSQL connection pool
-const pool = require('../db')
+const pool = require('../../db')
 
 //GET Request to get items from the database
 router.get('/', async (req,res) => {

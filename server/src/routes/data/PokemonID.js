@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //Import postgre
-const pool = require('../db')
+const pool = require('../../db')
 
 //General GET Request function
 router.get('/', async (req, res) => {

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //Imports postgreSQL connection pool
+const pool = require('../../db')
 
 
 //General GET Request
