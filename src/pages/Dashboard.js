@@ -4,11 +4,13 @@ function Dashboard({
     isAuthenticated = false,
     authLoading = true,
 }) {
+
     const [pokemon, setPokemon] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
+
         // Do not fetch data until authentication is confirmed.
         if (authLoading || !isAuthenticated) {
             return;
@@ -73,6 +75,7 @@ function Dashboard({
             </section>
         );
     }
+
 
     return (
         <section>
