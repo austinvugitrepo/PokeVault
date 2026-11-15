@@ -3,12 +3,10 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  // Temporary signed-out values until a real login system is connected.
-  const isAuthenticated = false;
-  const authLoading = false;
-
   return (
     <>
       <Navbar />
@@ -16,18 +14,17 @@ function App() {
       <main style={{ padding: '1rem' }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
 
           <Route
             path="/dashboard"
             element={
-              <Dashboard
-                isAuthenticated={isAuthenticated}
-                authLoading={authLoading}
-              />
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
             }
           />
-
-          <Route path="/about" element={<About />} />
         </Routes>
       </main>
     </>
