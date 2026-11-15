@@ -73,7 +73,7 @@ PGHOST=localhost
 PGPORT=5442
 PGUSER=postgres
 PGDATABASE=PokeVault
-POKEVAULT_DB_PASSWORD= CDFy819@421234567@
+POKEVAULT_DB_PASSWORD= 
 
 Startup the Backend (Usually done in Powershell in the server directory)
 
