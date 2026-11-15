@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Displays infomration results in descending order based on the time it was created
-            'SELECT * FROM Pokemon_Type'
+            'SELECT * FROM "Pokemon_Type"'
         )
         //Response code and displays information sorted into rows
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO Pokemon_Type (typeid, name, description ) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO "Pokemon_Type" (typeid, name, description ) VALUES ($1, $2, $3) RETURNING *',
             [typeid, name ?? null, description ?? null]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Pokemon_Type SET typeid = $1, name = $2, description = $3 WHERE id = $4 RETURNING *',
+            'UPDATE "Pokemon_Type" SET typeid = $1, name = $2, description = $3 WHERE id = $4 RETURNING *',
             [typeid, name ?? null, description ?? null, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM Pokemon_Type WHERE id = $1 RETURNING *',
+            'DELETE  FROM "Pokemon_Type" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

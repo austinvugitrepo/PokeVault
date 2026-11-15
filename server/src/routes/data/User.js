@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Displays infomration results in descending order based on the time it was created
-            'SELECT * FROM User'
+            'SELECT * FROM "User"'
         )
         //Response code and displays information sorted into rows
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO User (userid, username, email, passwordhash, createdate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            'INSERT INTO "User" (userid, username, email, passwordhash, createdate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [userid, username ?? null , email ?? null , passwordhash ?? null, createdate]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE User SET userid = $1, username = $2, email = $3, passwordhash = $4, createdate = $5 WHERE id = $6 RETURNING id, userid, username, email, createdate',
+            'UPDATE "User" SET userid = $1, username = $2, email = $3, passwordhash = $4, createdate = $5 WHERE id = $6 RETURNING id, userid, username, email, createdate',
             [userid, username ?? null , email ?? null , passwordhash ?? null, createdate, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM User WHERE id = $1 RETURNING *',
+            'DELETE  FROM "User" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

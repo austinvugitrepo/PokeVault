@@ -10,7 +10,7 @@ router.get('/', async (req,res) => {
     try {
         const result = await pool.query(
             //Display information from the Generation Table
-            'SELECT * FROM Generation'
+            'SELECT * FROM "Generation"'
         )
         //Response Code for Successful Query Request
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO Generation (generationid, name, description) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO "Generation" (generationid, name, description) VALUES ($1, $2, $3) RETURNING *',
             [generationid, name || null, description || null]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Generation SET generationid = $1, name = $2, description = $3 WHERE id = $4 RETURNING *',
+            'UPDATE "Generation" SET generationid = $1, name = $2, description = $3 WHERE id = $4 RETURNING *',
             [generationid, name || null, description || null, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM Generation WHERE id = $1 RETURNING *',
+            'DELETE  FROM "Generation" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Displays infomration results in descending order based on the time it was created
-            'SELECT * FROM TeamMember'
+            'SELECT * FROM "TeamMember"'
         )
         //Response code and displays information sorted into rows
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO TeamMember (teamconfigid, pokemonlvlid, teamslot) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO "TeamMember" (teamconfigid, pokemonlvlid, teamslot) VALUES ($1, $2, $3) RETURNING *',
             [teamconfigid, pokemonlvlid, teamslot]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE TeamMember SET teamconfigid = $1, pokemonlvlid = $2, teamslot = $3 WHERE id = $4 RETURNING *',
+            'UPDATE "TeamMember" SET teamconfigid = $1, pokemonlvlid = $2, teamslot = $3 WHERE id = $4 RETURNING *',
             [teamconfigid, pokemonlvlid, teamslot, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM TeamMember WHERE id = $1 RETURNING *',
+            'DELETE  FROM "TeamMember" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

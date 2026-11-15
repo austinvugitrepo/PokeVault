@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Display Available data
-            'SELECT * FROM PokemonID'
+            'SELECT * FROM "PokemonID"'
         )
         //Successful Response Code
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO PokemonID (pokemonid, name, generationid, height, weight, health, attack, defence, special_attack, special_defence, speed ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
+            'INSERT INTO "PokemonID" (pokemonid, name, generationid, height, weight, health, attack, defence, special_attack, special_defence, speed ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
             [pokemonid, name ?? null , generationid, height ?? null, weight ?? null, health, attack, defence, special_attack, special_defence, speed]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE PokemonID SET pokemonid = $1, name = $2, generationid = $3, height = $4, weight = $5, health = $6, attack = $7, defence = $8, special_attack = $9, special_defence = $10, speed = $11 WHERE id = $12 RETURNING *',
+            'UPDATE "PokemonID" SET pokemonid = $1, name = $2, generationid = $3, height = $4, weight = $5, health = $6, attack = $7, defence = $8, special_attack = $9, special_defence = $10, speed = $11 WHERE id = $12 RETURNING *',
             [pokemonid, name ?? null, generationid, height ?? null , weight ?? null, health, attack, defence, special_attack, special_defence, speed, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM PokemonID WHERE id = $1 RETURNING *',
+            'DELETE  FROM "PokemonID" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

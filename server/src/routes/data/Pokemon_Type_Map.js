@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Displays available data
-            'SELECT * FROM Pokemon_Type_Map'
+            'SELECT * FROM "Pokemon_Type_Map"'
         )
         //Successful Response Code
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO Pokemon_Type_Map (pokemonid, typeid ) VALUES ($1, $2) RETURNING *',
+            'INSERT INTO "Pokemon_Type_Map" (pokemonid, typeid ) VALUES ($1, $2) RETURNING *',
             [pokemonid, typeid]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Pokemon_Type_Map SET pokemonid = $1, typeid = $2 WHERE id = $3 RETURNING *',
+            'UPDATE "Pokemon_Type_Map" SET pokemonid = $1, typeid = $2 WHERE id = $3 RETURNING *',
             [pokemonid, typeid, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM Pokemon_Type_Map WHERE id = $1 RETURNING *',
+            'DELETE  FROM "Pokemon_Type_Map" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

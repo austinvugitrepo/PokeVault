@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try {
         const result = await pool.query(
             //Displays available information
-            'SELECT * FROM PokemonLvl'
+            'SELECT * FROM "PokemonLvl"'
         )
         //Successful Response Code
         res.status(200).json({data: result.rows})
@@ -33,8 +33,8 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO PokemonLvl (pokemonlvlid, pokemonid, level, nickname, notes ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [pokemonlvlid, pokemonid, level, nickname || null , notes || null]
+            'INSERT INTO "PokemonLvl" (pokemonlvlid, pokemonid, level, nickname, notes ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [pokemonlvlid, pokemonid, level, nickname ?? null , notes ?? null]
         )
 
         res.status(201).json({data: result.rows[0]})
@@ -57,8 +57,8 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE PokemonLvl SET pokemonlvlid = $1, pokemonid = $2, level = $3, nickname = $4, notes = $5 WHERE id = $6 RETURNING *',
-            [pokemonlvlid, pokemonid, level, nickname || null, notes || null , req.params.id]
+            'UPDATE "PokemonLvl" SET pokemonlvlid = $1, pokemonid = $2, level = $3, nickname = $4, notes = $5 WHERE id = $6 RETURNING *',
+            [pokemonlvlid, pokemonid, level, nickname ?? null, notes ?? null , req.params.id]
         )
 
         //Checks to see if the item exists
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM PokemonLvl WHERE id = $1 RETURNING *',
+            'DELETE  FROM "PokemonLvl" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

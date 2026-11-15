@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try{
         const result = await pool.query(
             //Displays infomration results in descending order based on the time it was created
-            'SELECT * FROM TeamConfiguration'
+            'SELECT * FROM "TeamConfiguration"'
         )
         //Response code and displays information sorted into rows
         res.status(200).json({data: result.rows})
@@ -33,7 +33,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO TeamConfiguration (teamconfigid, userid, name, description, createdate ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            'INSERT INTO "TeamConfiguration" (teamconfigid, userid, name, description, createdate ) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [teamconfigid, userid, name ?? null, description ?? null, createdate]
         )
 
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE TeamConfiguration SET teamconfigid = $1,userid = $2, name = $3, description = $4, createdate = $5 WHERE id = $6 RETURNING *',
+            'UPDATE "TeamConfiguration" SET teamconfigid = $1,userid = $2, name = $3, description = $4, createdate = $5 WHERE id = $6 RETURNING *',
             [teamconfigid, userid, name ?? null, description ?? null, createdate, req.params.id]
         )
 
@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM TeamConfiguration WHERE id = $1 RETURNING *',
+            'DELETE  FROM "TeamConfiguration" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 

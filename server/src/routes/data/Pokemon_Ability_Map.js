@@ -11,7 +11,7 @@ router.get('/', async (req,res) => {
     try{
         const result = await pool.query(
             //Display information from the table
-            'SELECT * FROM Pokemon_Ability_Map'
+            'SELECT * FROM "Pokemon_Ability_Map"'
         )
         //Success response code
         res.status(200).json({data: result.rows})
@@ -34,7 +34,7 @@ router.post('/', async (req,res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO Pokemon_Ability_Map (pokemonid, abilityid) VALUES ($1, $2) RETURNING *',
+            'INSERT INTO "Pokemon_Ability_Map" (pokemonid, abilityid) VALUES ($1, $2) RETURNING *',
             [pokemonid, abilityid ?? null]
         )
 
@@ -58,7 +58,7 @@ router.put('/:id', async (req, res) => {
         }
 
         const result = await pool.query(
-            'UPDATE Pokemon_Ability_Map SET pokemonid = $1, abilityid = $2 WHERE id = $3 RETURNING *',
+            'UPDATE "Pokemon_Ability_Map" SET pokemonid = $1, abilityid = $2 WHERE id = $3 RETURNING *',
             [pokemonid, abilityid ?? null,  req.params.id]
         )
 
@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         const result = await pool.query(
-            'DELETE  FROM Pokemon_Ability_Map WHERE id = $1 RETURNING *',
+            'DELETE  FROM "Pokemon_Ability_Map" WHERE id = $1 RETURNING *',
             [req.params.id]
         )
 
