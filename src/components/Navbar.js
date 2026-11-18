@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import ServerStatus from './ServerStatus'
 
 const Navbar = () => {
     return(
@@ -6,6 +7,7 @@ const Navbar = () => {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/about">About</NavLink>
+            <ServerStatus />
         </nav>
     )
 }
