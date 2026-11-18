@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS public."PokemonID"
 	PokemonID int PRIMARY KEY,
 	Name varchar(255) NOT NULL,
 	GenerationID int NOT NULL,
+	Type varchar(255) NOT NULL,
 	Health int NOT NULL,
 	Attack int NOT NULL,
 	Defence int NOT NULL,
