@@ -2,7 +2,7 @@ CREATE TABLE public."Pokemon_Ability_Map"
 (
 
 	PokemonID int NOT NULL,
-	AbilityID int NOT NULL,
+	AbilityID varchar(255) NOT NULL,
 
 	PRIMARY KEY (PokemonId, AbilityID),
 
