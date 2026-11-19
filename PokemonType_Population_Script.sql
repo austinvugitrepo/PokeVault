@@ -1,6 +1,7 @@
 INSERT INTO public."Pokemon_Type"(
 	typeid, name, description)
 	VALUES 
+	(0, 'None', 'Placeholder for Pokemon without a second type'),
 	(1, 'Bug', 'Signifies insects, arthropods, metamorphosis, and early-stage growth.'),
 	(2, 'Dark', 'Conveys intimidation, ruthlessness, trickery, and dirty-fighting tactics.'),
 	(3, 'Dragon', 'Associated with legendary, arcane, and immense raw power.'),
