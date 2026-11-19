@@ -26,15 +26,12 @@ cd server
 npm install
 ```
 
-The server reads its settings from environment variables. `server/.env.example` lists every one. Copy it to `server/.env`, fill in real values, and load it into your shell before starting:
+The server reads its settings from environment variables. `server/.env.example` lists every one. Copy it to `server/.env` and fill in real values. The server loads it on startup:
 
 ```bash
 cp .env.example .env    # then edit .env
-set -a; . ./.env; set +a
 npm start               # or: npm run dev (auto-restarts with nodemon)
 ```
-
-The server now loads `server/.env` on its own (via `dotenv`), so the `set -a` line is optional.
 
 The API runs at [http://localhost:5000](http://localhost:5000). Check it with `curl http://localhost:5000/api/health`.
 
@@ -114,6 +111,6 @@ psql -h localhost -p 5442 -U postgres -d PokeVault -f PokemonID_Table_Population
 3. Open [http://localhost:3000/team-builder](http://localhost:3000/team-builder), or click Team Builder in the navbar or on the homepage.
 4. Check that all 151 Pokémon load, searching by name filters the list, Add puts a Pokémon on your team (no duplicates), Remove takes it off, and Add stops working at 6/6.
 
-No database yet? The frontend and backend still run without one. The navbar shows "Server online", but the Team Builder shows an error because it can't load Pokémon.
+The app also works without the database, but the Team Builder will show an error since it can't load any Pokémon.
 
 Saving teams is not built yet.
