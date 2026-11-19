@@ -34,6 +34,8 @@ set -a; . ./.env; set +a
 npm start               # or: npm run dev (auto-restarts with nodemon)
 ```
 
+The server now loads `server/.env` on its own (via `dotenv`), so the `set -a` line is optional.
+
 The API runs at [http://localhost:5000](http://localhost:5000). Check it with `curl http://localhost:5000/api/health`.
 
 Required variables:
@@ -94,3 +96,24 @@ Example:
 Do a GET Request (You should see 1 test entry in the result box)
 
 http://localhost:5000/api/Generation
+
+### Testing the Team Builder
+
+The Team Builder page searches the Gen 1 Pokémon in the `PokemonID` table and lets you build a team of up to 6.
+
+1. Create and fill the two tables it needs, in this order (`PokemonID` depends on `Generation`). Run them in pgAdmin's Query Tool, or with `psql` from the repo root:
+
+```bash
+psql -h localhost -p 5442 -U postgres -d PokeVault -f Generation_Table_Creation_Script.sql
+psql -h localhost -p 5442 -U postgres -d PokeVault -f Generation_Table_Population_Script.sql
+psql -h localhost -p 5442 -U postgres -d PokeVault -f PokemonID_Table_Creation_Script.sql
+psql -h localhost -p 5442 -U postgres -d PokeVault -f PokemonID_Table_Population_Script_Gen1.sql
+```
+
+2. Start the backend (`cd server`, then `npm start`) and the frontend (`npm start` in the repo root).
+3. Open [http://localhost:3000/team-builder](http://localhost:3000/team-builder), or click Team Builder in the navbar or on the homepage.
+4. Check that all 151 Pokémon load, searching by name filters the list, Add puts a Pokémon on your team (no duplicates), Remove takes it off, and Add stops working at 6/6.
+
+No database yet? The frontend and backend still run without one. The navbar shows "Server online", but the Team Builder shows an error because it can't load Pokémon.
+
+Saving teams is not built yet.
