@@ -1,13 +1,12 @@
-CREATE TABLE public."PokemonLvl"
+-- Table: public.PokemonLvl
+
+-- DROP TABLE IF EXISTS public."PokemonLvl";
+
+CREATE TABLE IF NOT EXISTS public."PokemonLvl"
 (
-	PokemonLvlID int PRIMARY KEY,
-	PokemonID int NOT NULL,
-
-	Level int NOT NULL,
-	Nickname varchar(255) NOT NULL,
-	Notes varchar(255) NOT NULL,
-
-	FOREIGN KEY (PokemonID) REFERENCES public."PokemonID"(PokemonID)
+    pokemonlvlid integer NOT NULL,
+    "expToNextLevel" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "PokemonLvl_pkey" PRIMARY KEY (pokemonlvlid)
 )
 
 TABLESPACE pg_default;
