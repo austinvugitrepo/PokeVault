@@ -4,7 +4,7 @@ import './Home.css';
 // Feature cards shown on the homepage; no "to" means not built yet
 const features = [
   { title: 'Pokedex', text: 'Browse Pokémon and their stats.' },
-  { title: 'Team Builder', text: 'Plan a battle team of up to 6 Pokémon.' },
+  { title: 'Team Builder', text: 'Plan a battle team of up to 6 Pokémon.', to: '/team-builder' },
   { title: 'Dashboard', text: 'See your saved data.', to: '/dashboard' },
   { title: 'About', text: 'Meet the team behind PokeVault.', to: '/about' },
 ];

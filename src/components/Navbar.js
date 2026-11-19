@@ -5,6 +5,7 @@ const Navbar = () => {
     return(
         <nav style ={{ display: 'flex', gap: '1rem', padding: '1rem'}}>
             <NavLink to="/">Home</NavLink>
+            <NavLink to="/team-builder">Team Builder</NavLink>
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/about">About</NavLink>
             <ServerStatus />

@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
+import TeamBuilder from './pages/TeamBuilder';
 
 function App() {
   // Temporary signed-out values until a real login system is connected.
@@ -28,6 +29,8 @@ function App() {
           />
 
           <Route path="/about" element={<About />} />
+
+          <Route path="/team-builder" element={<TeamBuilder />} />
         </Routes>
       </main>
     </>
