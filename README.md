@@ -53,4 +53,44 @@ cd database
 docker compose up
 ```
 
-No tables exist yet, so the `/api/*` table routes return a 500 error until the schema is added.
+### Testing Database Tables
+
+Startup the Frontend (Can be done in either powershell inside the PokeVault directory, or through Visual Studio Code)
+
+```bash
+npm start
+```
+
+Edit the test .env file with the following to reach the database
+
+ Copy to server/.env and fill in real values. Never commit .env.
+PORT=5000
+SESSION_SECRET= 32_random_characters
+DEMO_USERNAME= ex_user
+DEMO_PASSWORD= ex_password
+ Database (defaults match database/docker-compose.yml)
+PGHOST=localhost
+PGPORT=5442
+PGUSER=postgres
+PGDATABASE=PokeVault
+POKEVAULT_DB_PASSWORD= 
+
+Startup the Backend (Usually done in Powershell in the server directory)
+
+```bash
+cd server
+npm start
+```
+### Postman
+
+Open up the Postman application and test the endpoints with SQL Queries with the following link format:
+
+http://localhost:5000/api/endpoint
+
+Endpoints should match the name of the /routes/data js files without the js extension
+
+Example:
+
+Do a GET Request (You should see 1 test entry in the result box)
+
+http://localhost:5000/api/Generation
