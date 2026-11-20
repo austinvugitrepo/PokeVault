@@ -7,110 +7,95 @@ PokeVault is a React single-page app built with react-router-dom that pulls Pok�
 - `src/`: React frontend
 - `server/`: Express backend (auth, health, and the `/api/*` table routes)
 - `database/`: PostgreSQL 16 via Docker Compose (see `database/README.md`)
+- `*.sql` (repo root): table creation and population scripts
 
 ## Getting started
 
-### Frontend
+Run every command from the repo root unless a step says otherwise. Commands work in both bash and PowerShell except where a PowerShell version is shown.
 
-```bash
-npm install
-npm start
-```
-
-Then open [http://localhost:3000](http://localhost:3000).
-
-### Backend
+### 1. Set up the server's `.env`
 
 ```bash
 cd server
 npm install
+cp .env.example .env    # PowerShell: Copy-Item .env.example .env
+cd ..
 ```
 
-The server reads its settings from environment variables. `server/.env.example` lists every one. Copy it to `server/.env` and fill in real values. The server loads it on startup:
-
-```bash
-cp .env.example .env    # then edit .env
-npm start               # or: npm run dev (auto-restarts with nodemon)
-```
-
-The API runs at [http://localhost:5000](http://localhost:5000). Check it with `curl http://localhost:5000/api/health`.
-
-Required variables:
+Edit `server/.env` and fill in:
 
 - `SESSION_SECRET`: at least 32 random characters
 - `DEMO_USERNAME`, `DEMO_PASSWORD`: the local demo login
-- `POKEVAULT_DB_PASSWORD`: must match the password used for the database
+- `POKEVAULT_DB_PASSWORD`: any password; the database in step 2 is created with it
 
-Never commit `.env` or any real passwords.
+The other values already match the Docker database. The server loads this file on startup, and Docker reads the password from it too. Never commit `.env` or any real passwords.
 
-### Database
-
-Start PostgreSQL from `database/` with the same `POKEVAULT_DB_PASSWORD` set:
+### 2. Start the database
 
 ```bash
-cd database
-docker compose up
+docker compose -f database/docker-compose.yml --env-file server/.env up -d
 ```
 
-### Testing Database Tables
+This starts PostgreSQL in the background on `localhost:5432` with an empty `pokevault` database. Stop it with the same command, using `down` instead of `up -d`.
 
-Startup the Frontend (Can be done in either powershell inside the PokeVault directory, or through Visual Studio Code)
+### 3. Create and fill the tables
+
+The Team Builder needs the `Generation` and `PokemonID` tables, loaded in this order because `PokemonID` depends on `Generation`.
+
+bash:
 
 ```bash
-npm start
+for f in Generation_Table_Creation_Script.sql Generation_Table_Population_Script.sql PokemonID_Table_Creation_Script.sql PokemonID_Table_Population_Script_Gen1.sql; do
+  docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U pokevault -d pokevault < "$f"
+done
 ```
 
-Edit the test .env file with the following to reach the database
+PowerShell:
 
- Copy to server/.env and fill in real values. Never commit .env.
-PORT=5000
-SESSION_SECRET= 32_random_characters
-DEMO_USERNAME= ex_user
-DEMO_PASSWORD= ex_password
- Database (defaults match database/docker-compose.yml)
-PGHOST=localhost
-PGPORT=5442
-PGUSER=postgres
-PGDATABASE=PokeVault
-POKEVAULT_DB_PASSWORD= 
+```powershell
+$OutputEncoding = [System.Text.UTF8Encoding]::new()
+foreach ($f in 'Generation_Table_Creation_Script.sql','Generation_Table_Population_Script.sql','PokemonID_Table_Creation_Script.sql','PokemonID_Table_Population_Script_Gen1.sql') {
+  Get-Content -Raw -Encoding UTF8 $f | docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U pokevault -d pokevault
+}
+```
 
-Startup the Backend (Usually done in Powershell in the server directory)
+You'll see `ERROR: role "postgres" does not exist` once per creation script. That's harmless: the scripts set the table owner to `postgres`, which the Docker database doesn't have, and the tables are still created. Run this step once; running it again gives "already exists" and duplicate key errors.
+
+Using your own PostgreSQL install instead (for example with pgAdmin)? Point the `PG*` values in `server/.env` at it and run the same scripts in its Query Tool.
+
+### 4. Start the backend and frontend
+
+In one terminal:
 
 ```bash
 cd server
-npm start
+npm start               # or: npm run dev (auto-restarts with nodemon)
 ```
-### Postman
 
-Open up the Postman application and test the endpoints with SQL Queries with the following link format:
-
-http://localhost:5000/api/endpoint
-
-Endpoints should match the name of the /routes/data js files without the js extension
-
-Example:
-
-Do a GET Request (You should see 1 test entry in the result box)
-
-http://localhost:5000/api/Generation
-
-### Testing the Team Builder
-
-The Team Builder page searches the Gen 1 Pokémon in the `PokemonID` table and lets you build a team of up to 6.
-
-1. Create and fill the two tables it needs, in this order (`PokemonID` depends on `Generation`). Run them in pgAdmin's Query Tool, or with `psql` from the repo root:
+In another, from the repo root:
 
 ```bash
-psql -h localhost -p 5442 -U postgres -d PokeVault -f Generation_Table_Creation_Script.sql
-psql -h localhost -p 5442 -U postgres -d PokeVault -f Generation_Table_Population_Script.sql
-psql -h localhost -p 5442 -U postgres -d PokeVault -f PokemonID_Table_Creation_Script.sql
-psql -h localhost -p 5442 -U postgres -d PokeVault -f PokemonID_Table_Population_Script_Gen1.sql
+npm install
+npm start
 ```
 
-2. Start the backend (`cd server`, then `npm start`) and the frontend (`npm start` in the repo root).
-3. Open [http://localhost:3000/team-builder](http://localhost:3000/team-builder), or click Team Builder in the navbar or on the homepage.
-4. Check that all 151 Pokémon load, searching by name filters the list, Add puts a Pokémon on your team (no duplicates), Remove takes it off, and Add stops working at 6/6.
+Open [http://localhost:3000](http://localhost:3000). The API runs at [http://localhost:5000](http://localhost:5000); check it with `curl http://localhost:5000/api/health`.
 
 The app also works without the database, but the Team Builder will show an error since it can't load any Pokémon.
 
+## Testing
+
+### Team Builder
+
+1. Open [http://localhost:3000/team-builder](http://localhost:3000/team-builder), or click Team Builder in the navbar or on the homepage.
+2. Check that all 151 Pokémon load, searching by name filters the list, Add puts a Pokémon on your team (no duplicates), Remove takes it off, and Add stops working at 6/6.
+
 Saving teams is not built yet.
+
+### Postman
+
+Test the table endpoints in Postman with this URL format:
+
+http://localhost:5000/api/endpoint
+
+Endpoint names match the files in `server/src/routes/data/` without the `.js` extension. For example, a GET request to http://localhost:5000/api/Generation returns the rows in the `Generation` table.
