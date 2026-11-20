@@ -28,7 +28,16 @@ Edit `server/.env` and fill in:
 - `DEMO_USERNAME`, `DEMO_PASSWORD`: the local demo login
 - `POKEVAULT_DB_PASSWORD`: any password; the database in step 2 is created with it
 
-The other values already match the Docker database. The server loads this file on startup, and Docker reads the password from it too. Never commit `.env` or any real passwords.
+The database values are already filled in and match the Docker database in step 2:
+
+```
+PGHOST=localhost
+PGPORT=5442
+PGUSER=postgres
+PGDATABASE=PokeVault
+```
+
+The server loads this file on startup, and Docker reads the password from it too. Never commit `.env` or any real passwords.
 
 ### 2. Start the database
 
@@ -36,7 +45,7 @@ The other values already match the Docker database. The server loads this file o
 docker compose -f database/docker-compose.yml --env-file server/.env up -d
 ```
 
-This starts PostgreSQL in the background on `localhost:5432` with an empty `pokevault` database. Stop it with the same command, using `down` instead of `up -d`.
+This starts PostgreSQL in the background on `localhost:5442` with an empty `PokeVault` database owned by `postgres`. Stop it with the same command, using `down` instead of `up -d`.
 
 ### 3. Create and fill the tables
 
@@ -46,7 +55,7 @@ bash:
 
 ```bash
 for f in Generation_Table_Creation_Script.sql Generation_Table_Population_Script.sql PokemonID_Table_Creation_Script.sql PokemonID_Table_Population_Script_Gen1.sql; do
-  docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U pokevault -d pokevault < "$f"
+  docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U postgres -d PokeVault < "$f"
 done
 ```
 
@@ -55,13 +64,13 @@ PowerShell:
 ```powershell
 $OutputEncoding = [System.Text.UTF8Encoding]::new()
 foreach ($f in 'Generation_Table_Creation_Script.sql','Generation_Table_Population_Script.sql','PokemonID_Table_Creation_Script.sql','PokemonID_Table_Population_Script_Gen1.sql') {
-  Get-Content -Raw -Encoding UTF8 $f | docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U pokevault -d pokevault
+  Get-Content -Raw -Encoding UTF8 $f | docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U postgres -d PokeVault
 }
 ```
 
-You'll see `ERROR: role "postgres" does not exist` once per creation script. That's harmless: the scripts set the table owner to `postgres`, which the Docker database doesn't have, and the tables are still created. Run this step once; running it again gives "already exists" and duplicate key errors.
+Run this step once; running it again gives "already exists" and duplicate key errors.
 
-Using your own PostgreSQL install instead (for example with pgAdmin)? Point the `PG*` values in `server/.env` at it and run the same scripts in its Query Tool.
+Using your own PostgreSQL install instead (for example with pgAdmin)? Set it up with the same values and run the same scripts in its Query Tool.
 
 ### 4. Start the backend and frontend
 
@@ -94,8 +103,14 @@ Saving teams is not built yet.
 
 ### Postman
 
-Test the table endpoints in Postman with this URL format:
+Open up the Postman application and test the endpoints with SQL Queries with the following link format:
 
 http://localhost:5000/api/endpoint
 
-Endpoint names match the files in `server/src/routes/data/` without the `.js` extension. For example, a GET request to http://localhost:5000/api/Generation returns the rows in the `Generation` table.
+Endpoints should match the name of the /routes/data js files without the js extension
+
+Example:
+
+Do a GET Request (You should see 1 test entry in the result box)
+
+http://localhost:5000/api/Generation

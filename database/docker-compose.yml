@@ -6,15 +6,15 @@ services:
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_USER: pokevault
-      POSTGRES_DB: pokevault
+      POSTGRES_USER: postgres
+      POSTGRES_DB: PokeVault
       POSTGRES_PASSWORD: ${POKEVAULT_DB_PASSWORD:?Set POKEVAULT_DB_PASSWORD}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:5442:5432"
     volumes:
       - pokevault-pg-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pokevault -d pokevault"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d PokeVault"]
       interval: 5s
       timeout: 5s
       retries: 12
