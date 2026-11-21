@@ -1,12 +1,7 @@
 function requireAuth(req, res, next) {
-  if (!req.session?.userId) {
-    return res.status(401).json({
-      error: "Unauthorized",
-      message: "Please sign in to access this resource.",
-    });
+  if (req.session && req.session.user) {
+    return next();
   }
-
-  next();
+  return res.status(401).json({ error: 'Unauthorized', message: 'Authentication required' });
 }
-
 module.exports = requireAuth;

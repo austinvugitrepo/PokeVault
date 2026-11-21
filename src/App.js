@@ -3,13 +3,14 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
+<<<<<<< HEAD
 import TeamBuilder from './pages/TeamBuilder';
+=======
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
+>>>>>>> d96a872ff5fa41bf93796a75d93e64589b5467ac
 
 function App() {
-  // Temporary signed-out values until a real login system is connected.
-  const isAuthenticated = false;
-  const authLoading = false;
-
   return (
     <>
       <Navbar />
@@ -17,20 +18,24 @@ function App() {
       <main style={{ padding: '1rem' }}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
 
           <Route
             path="/dashboard"
             element={
-              <Dashboard
-                isAuthenticated={isAuthenticated}
-                authLoading={authLoading}
-              />
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
             }
           />
+<<<<<<< HEAD
 
           <Route path="/about" element={<About />} />
 
           <Route path="/team-builder" element={<TeamBuilder />} />
+=======
+>>>>>>> d96a872ff5fa41bf93796a75d93e64589b5467ac
         </Routes>
       </main>
     </>
