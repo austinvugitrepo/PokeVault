@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 
 // these need to match the auth routes in the server folder
 // if login doesn't work check these first
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_URL = process.env.REACT_APP_API_URL || "";
 const LOGIN_PATH = "/api/auth/login";
 const LOGOUT_PATH = "/api/auth/logout";
 const ME_PATH = "/api/auth/me";
