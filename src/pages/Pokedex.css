@@ -1,0 +1,40 @@
+/* Basic layout for the Pokedex page. Rename the classes if the component uses different ones. */
+.pokedex {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.pokedex-search {
+  width: 100%;
+  max-width: 24rem;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 0.125rem solid #c5cfdf;
+  border-radius: 0.5rem;
+}
+
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 1rem;
+}
+
+.pokedex-card {
+  padding: 0.8rem;
+  text-align: center;
+  background: #f3f6fb;
+  color: #0f1b2d;
+  border-radius: 0.8rem;
+}
+
+.pokedex-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.pokedex-card h3 {
+  margin: 0.4rem 0 0;
+  text-transform: capitalize;
+}

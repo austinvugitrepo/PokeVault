@@ -1,0 +1,105 @@
+/* Full-screen dark background with the login card centered on it */
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: #0f1b2d;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  padding: 3.5rem 2rem 2rem;
+  background: #f3f6fb;
+  color: #0f1b2d;
+  border-radius: 1.25rem;
+  border-top: 0.4rem solid #ffcb05;
+}
+
+/* The little Poké Ball sitting on top of the card. It's all CSS, no image file needed. */
+.login-ball {
+  position: absolute;
+  top: -1.9rem;
+  left: 50%;
+  width: 3.6rem;
+  height: 3.6rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 0.25rem solid #0f1b2d;
+  background:
+    radial-gradient(circle at center, #f3f6fb 0 0.45rem, #0f1b2d 0.45rem 0.6rem, transparent 0.6rem),
+    linear-gradient(#e63946 0 46%, #0f1b2d 46% 54%, #f3f6fb 54% 100%);
+}
+
+.login-card h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 1.9rem;
+  letter-spacing: 0.01em;
+}
+
+.login-sub {
+  margin: 0.35rem 0 1.75rem;
+  text-align: center;
+  color: #4a5a73;
+}
+
+.login-card label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.login-card input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1.1rem;
+  padding: 0.7rem 0.8rem;
+  font-size: 1rem;
+  color: #0f1b2d;
+  background: #ffffff;
+  border: 0.125rem solid #c5cfdf;
+  border-radius: 0.6rem;
+}
+
+/* Blue outline when you tab onto something, so keyboard users can see where they are */
+.login-card input:focus-visible,
+.login-card button:focus-visible {
+  outline: 0.1875rem solid #3b5ba7;
+  outline-offset: 0.125rem;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f1b2d;
+  background: #ffcb05;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.login-card button:hover:not(:disabled) {
+  background: #f0bd00;
+}
+
+/* Faded out while it's waiting on the server so nobody double-clicks it */
+.login-card button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.login-error {
+  margin: -0.25rem 0 1rem;
+  padding: 0.6rem 0.75rem;
+  color: #8f1d27;
+  background: #fde8ea;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
