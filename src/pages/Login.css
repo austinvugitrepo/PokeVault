@@ -103,3 +103,16 @@
   border-radius: 0.5rem;
   font-size: 0.95rem;
 }
+
+/* the "create account" / "log in" link under the form */
+.login-switch {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #4a5a73;
+}
+
+.login-switch a {
+  color: #3b5ba7;
+  font-weight: 600;
+}

@@ -87,20 +87,3 @@ export default function Login() {
     </main>
   );
 }
-EOF
-4. Add the link styles to Login.css (appends, doesn't replace)
-bash
-cat >> src/pages/Login.css <<'EOF'
-
-/* the "create account" / "log in" link under the form */
-.login-switch {
-  margin: 1.25rem 0 0;
-  text-align: center;
-  font-size: 0.95rem;
-  color: #4a5a73;
-}
-
-.login-switch a {
-  color: #3b5ba7;
-  font-weight: 600;
-}
