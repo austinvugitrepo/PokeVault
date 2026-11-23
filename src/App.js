@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import TeamBuilder from './pages/TeamBuilder';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           <Route
             path="/dashboard"
@@ -33,5 +35,3 @@ function App() {
     </>
   );
 }
-
-export default App;

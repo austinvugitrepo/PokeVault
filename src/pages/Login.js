@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
@@ -8,8 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Where to go after logging in. If ProtectedRoute bounced them here, go back to
-  // the page they wanted. Otherwise just go to the home page.
+  // after login go back to the page they wanted, or home if they came here directly
   const redirectTo = location.state?.from?.pathname || "/";
 
   const [username, setUsername] = useState("");
@@ -17,16 +16,16 @@ export default function Login() {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Already logged in? No reason to show the form, so skip ahead.
+  // already logged in so skip the form
   if (!loading && isAuthenticated) {
     return <Navigate to={redirectTo} replace />;
   }
 
   async function handleSubmit(e) {
-    e.preventDefault(); // stops the page from reloading when you hit Enter
+    e.preventDefault(); // stops the page from reloading
     setError("");
 
-    // quick check before bothering the server
+    // check for empty fields before hitting the server
     if (!username.trim() || !password) {
       setError("Enter both a username and a password.");
       return;
@@ -80,7 +79,28 @@ export default function Login() {
             {submitting ? "Logging in…" : "Log in"}
           </button>
         </form>
+
+        <p className="login-switch">
+          New here? <Link to="/register">Create an account</Link>
+        </p>
       </section>
     </main>
   );
+}
+EOF
+4. Add the link styles to Login.css (appends, doesn't replace)
+bash
+cat >> src/pages/Login.css <<'EOF'
+
+/* the "create account" / "log in" link under the form */
+.login-switch {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #4a5a73;
+}
+
+.login-switch a {
+  color: #3b5ba7;
+  font-weight: 600;
 }
