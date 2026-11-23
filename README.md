@@ -49,12 +49,12 @@ This starts PostgreSQL in the background on `localhost:5442` with an empty `Poke
 
 ### 3. Create and fill the tables
 
-The Team Builder needs the `Generation` and `PokemonID` tables, loaded in this order because `PokemonID` depends on `Generation`.
+The Team Builder needs the `Generation` and `PokemonID` tables, loaded in this order because `PokemonID` depends on `Generation`. Register and login need the `User` table.
 
 bash:
 
 ```bash
-for f in Generation_Table_Creation_Script.sql Generation_Table_Population_Script.sql PokemonID_Table_Creation_Script.sql PokemonID_Table_Population_Script_Gen1.sql; do
+for f in Generation_Table_Creation_Script.sql Generation_Table_Population_Script.sql PokemonID_Table_Creation_Script.sql PokemonID_Table_Population_Script_Gen1.sql User_Table_Creation_Script.sql; do
   docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U postgres -d PokeVault < "$f"
 done
 ```
@@ -63,7 +63,7 @@ PowerShell:
 
 ```powershell
 $OutputEncoding = [System.Text.UTF8Encoding]::new()
-foreach ($f in 'Generation_Table_Creation_Script.sql','Generation_Table_Population_Script.sql','PokemonID_Table_Creation_Script.sql','PokemonID_Table_Population_Script_Gen1.sql') {
+foreach ($f in 'Generation_Table_Creation_Script.sql','Generation_Table_Population_Script.sql','PokemonID_Table_Creation_Script.sql','PokemonID_Table_Population_Script_Gen1.sql','User_Table_Creation_Script.sql') {
   Get-Content -Raw -Encoding UTF8 $f | docker compose -f database/docker-compose.yml --env-file server/.env exec -T postgres psql -U postgres -d PokeVault
 }
 ```
