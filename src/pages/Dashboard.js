@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
-function Dashboard({
-    isAuthenticated = false,
-    authLoading = true,
-}) {
+function Dashboard() {
+    const { isAuthenticated, loading: authLoading } = useAuth();
 
     const [pokemon, setPokemon] = useState([]);
     const [loading, setLoading] = useState(true);

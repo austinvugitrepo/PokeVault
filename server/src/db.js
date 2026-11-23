@@ -4,11 +4,11 @@ const { Pool } = require("pg");
 // Defaults match database/docker-compose.yml. The password has no default
 // on purpose: set POKEVAULT_DB_PASSWORD (or PGPASSWORD) in your environment.
 const pool = new Pool({
-  user: process.env.PGUSER || "pokevault",
+  user: process.env.PGUSER || "postgres",
   host: process.env.PGHOST || "localhost",
-  database: process.env.PGDATABASE || "pokevault",
+  database: process.env.PGDATABASE || "PokeVault",
   password: process.env.POKEVAULT_DB_PASSWORD || process.env.PGPASSWORD,
-  port: Number(process.env.PGPORT || 5432),
+  port: Number(process.env.PGPORT || 5442),
 });
 
 module.exports = pool;

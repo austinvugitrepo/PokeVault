@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import TeamBuilder from './pages/TeamBuilder';
+import Pokedex from './pages/Pokedex';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,6 +31,7 @@ function App() {
           />
 
           <Route path="/team-builder" element={<TeamBuilder />} />
+          <Route path="/pokedex" element={<Pokedex />} />
         </Routes>
       </main>
     </>
